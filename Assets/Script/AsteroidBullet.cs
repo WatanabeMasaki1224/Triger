@@ -7,12 +7,14 @@ public class AsteroidBullet : MonoBehaviour
     private int damage;
     private float speed;
     private Vector3 direction;
-    
+    public float lifeTime = 1f;
+
     public void Setup(Vector3 dir,float spd,int dmg)
     {
         direction = dir;
         speed = spd;
         damage = dmg;
+        Destroy(gameObject, lifeTime);
     }
 
     // Update is called once per frame

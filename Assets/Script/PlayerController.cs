@@ -49,19 +49,27 @@ public class PlayerController : MonoBehaviour
         {
             if (mainTriggers.Length > 0 && currentTrion >= mainTriggers[currentMainIndex].trionCost)
             {
-                mainTriggers[currentMainIndex].Use(transform.position, transform.right);
+                // マウスの位置をワールド座標で取得
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePos.z = 0f; // Z座標を0に揃える（2Dゲームで重要）
+
+                // プレイヤーの位置からマウス方向へのベクトルを計算
+                Vector3 direction = (mousePos - transform.position).normalized;
+
+                // 発射処理
+                mainTriggers[currentMainIndex].Use(transform.position, direction);
                 currentTrion -= mainTriggers[currentMainIndex].trionCost;
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        /*if (Input.GetMouseButtonDown(1))
         {
             if(subTriggers.Length > 0 && currentTrion >= subTriggers[currentSubIndex].trionCost)
             {
                 subTriggers[currentSubIndex].Use(transform.position);
                 currentTrion -= subTriggers[currentSubIndex].trionCost;
             }
-        }
+        }*/
     }
 
     void TriggerSwitch()
