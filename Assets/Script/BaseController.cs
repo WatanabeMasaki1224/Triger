@@ -4,7 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEditor.Build.Content;
 using UnityEngine;
 
-public class Base : MonoBehaviour
+public class BaseController : MonoBehaviour
 {
     public int maxHP = 100;
     private int currentHP;
@@ -14,9 +14,10 @@ public class Base : MonoBehaviour
         currentHP = maxHP;
     }
 
-    public void TakeDmage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHP -= damage;
+        Debug.Log(currentHP);
         if (currentHP <= 0)
         {
             Destroyed();

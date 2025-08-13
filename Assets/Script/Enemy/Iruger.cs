@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bumster : MonoBehaviour
+public class Iruger : MonoBehaviour
 {
     public int speed = 2;
-    private Transform player;
+    private Transform target;
     public int damage = 1;
 
     void Update()
     {
-        if (player == null)
+        if (target == null)
         {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null)
+            GameObject b = GameObject.FindGameObjectWithTag("Base");
+            if (b != null)
             {
-                player = p.transform;
+                target = b.transform;
             }
             else
             {
@@ -25,18 +25,18 @@ public class Bumster : MonoBehaviour
         }
 
 
-        Vector3 dir = (player.position - transform.position).normalized;
+        Vector3 dir = (target.position - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Base"))
         {
-            PlayerController playerCtrl = other.GetComponent<PlayerController>();
-            if (playerCtrl != null)
+            BaseController baseCtrl = other.GetComponent<BaseController>();
+            if (baseCtrl != null)
             {
-                playerCtrl.TakeDamage(damage);
+                baseCtrl.TakeDamage(damage);
             }
 
             // 自爆（スコアは入れない）

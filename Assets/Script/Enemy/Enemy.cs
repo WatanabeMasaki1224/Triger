@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public int maxHP = 10;
     private int currentHP;
+    public int score = 1;
 
     void Start()
     {
@@ -28,5 +29,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("die");
         Destroy(gameObject);
+        GameManager.Instance.AddScore(score);
     }
 }
