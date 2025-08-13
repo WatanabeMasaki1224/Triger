@@ -86,4 +86,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        currentTrion -= damage;
+        Debug.Log(currentTrion);
+        if (currentTrion <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+        //ƒQ[ƒ€I—¹‰æ–Ê‚ÉˆÚs
+    }
+
+    public int GetCurrentTrion()
+    {
+        return currentTrion;
+    }
+
 }
