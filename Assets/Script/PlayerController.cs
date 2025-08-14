@@ -29,6 +29,12 @@ public class PlayerController : MonoBehaviour
         MovementInput();
         AttackInput();
         TriggerSwitch();
+
+        // 武器ごとのタイマー更新
+        foreach (var trigger in mainTriggers)
+        {
+            trigger.UpdateTimer(Time.deltaTime);
+        }
     }
 
     void FixedUpdate()

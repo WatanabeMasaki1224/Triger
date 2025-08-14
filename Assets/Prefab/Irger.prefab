@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 753380210366879438}
   - component: {fileID: 5861258607753143153}
   - component: {fileID: 7877770703544779189}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Irger
   m_TagString: Enemy
   m_Icon: {fileID: 0}

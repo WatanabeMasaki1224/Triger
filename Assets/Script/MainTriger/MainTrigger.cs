@@ -12,9 +12,25 @@ public class MainTrigger
     public float speed;
     public int trionCost;
     public int damage;
+    public float coolTime = 1f;  
+
+    [HideInInspector] public float timer = 0f; // 現在のクールタイム
+
+    public bool CanUse()
+    {
+        return timer <= 0f;
+    }
+
+    public void UpdateTimer(float deltaTime)
+    {
+        if (timer > 0f)
+            timer -= deltaTime;
+    }
 
     public void Use(Vector3 firePoint,Vector3 direction)
     {
+        if (!CanUse()) return; // クールタイム中なら発射できない
+
         switch (type)
         {
             case TriggerType.Asteroid:
@@ -36,7 +52,9 @@ public class MainTrigger
                 GameObject slash = GameObject.Instantiate(slashPrefab,firePoint,Quaternion.identity);
                 slash.GetComponent<Slash>().Activate(direction, damage);
                 break;
+
         }
+        timer = coolTime; // 発射後にタイマーをセット
     }
 }
 public enum TriggerType
