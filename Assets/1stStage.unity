@@ -874,6 +874,24 @@ MonoBehaviour:
     damage: 1
     coolTime: 1
     timer: 0
+  - name: 
+    type: 2
+    bulletPrefab: {fileID: 3330299842443220063, guid: 0fe279ab68aa8e34694476823f75c730, type: 3}
+    slashPrefab: {fileID: 0}
+    speed: 5
+    trionCost: 1
+    damage: 1
+    coolTime: 1
+    timer: 0
+  - name: 
+    type: 1
+    bulletPrefab: {fileID: 2596347808822584849, guid: 8f3d8d3a6572b7c4dbdcf983021786ed, type: 3}
+    slashPrefab: {fileID: 0}
+    speed: 5
+    trionCost: 1
+    damage: 1
+    coolTime: 1
+    timer: 0
   subTriggers: []
 --- !u!58 &2103052349
 CircleCollider2D:

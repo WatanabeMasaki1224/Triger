@@ -163,8 +163,8 @@ MonoBehaviour:
   moveSpeed: 2
   stopDistance: 5
   bulletPrefab: {fileID: 8380714547983099827, guid: f13583a21362b434285025d44d0b542b, type: 3}
-  bulletSpeed: 5
-  fireInterval: 2
+  bulletSpeed: 2
+  fireInterval: 3
 --- !u!50 &4604290237578158096
 Rigidbody2D:
   serializedVersion: 4
@@ -191,4 +191,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

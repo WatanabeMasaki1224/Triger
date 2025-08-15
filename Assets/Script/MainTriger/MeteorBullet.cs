@@ -44,6 +44,8 @@ public class MeteorBullet : MonoBehaviour
             }
         }
 
+        Destroy(gameObject); // îöî≠å„Ç…è¡Ç¶ÇÈ
+
     }
 
 

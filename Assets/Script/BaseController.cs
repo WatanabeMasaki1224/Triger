@@ -31,7 +31,7 @@ public class BaseController : MonoBehaviour
 
         if(GameManager.Instance != null)
         {
-            GameManager.Instance.ReduceScore(1000);
+            GameManager.Instance.ReduceScore(100);
         }
 
         Destroy(gameObject);

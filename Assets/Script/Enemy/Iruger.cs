@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Iruger : MonoBehaviour
 {
-    public int speed = 2;
+    public float speed = 2f;
     private Transform target;
     public int damage = 1;
 
