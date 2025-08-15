@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private int currentSubIndex = 0;
     private Rigidbody2D rb;
     private Vector2 moveInput;
+    private Vector2 lookDirection = Vector2.right; //初期は右向き
 
     void Start()
     {
@@ -47,7 +48,33 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         moveInput = new Vector2(h, v).normalized;
+
+        // 移動入力がある場合のみ向きを更新
+        if (moveInput != Vector2.zero)
+        {
+            lookDirection = GetEightDirection(moveInput);
+        }
     }
+
+    Vector2 GetEightDirection(Vector2 dir)
+    {
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        // 0~360に変換
+        if (angle < 0) angle += 360f;
+
+        // 8方向ごとにスナップ
+        if (angle >= 337.5f || angle < 22.5f) return Vector2.right;
+        if (angle >= 22.5f && angle < 67.5f) return new Vector2(1, 1).normalized;
+        if (angle >= 67.5f && angle < 112.5f) return Vector2.up;
+        if (angle >= 112.5f && angle < 157.5f) return new Vector2(-1, 1).normalized;
+        if (angle >= 157.5f && angle < 202.5f) return Vector2.left;
+        if (angle >= 202.5f && angle < 247.5f) return new Vector2(-1, -1).normalized;
+        if (angle >= 247.5f && angle < 292.5f) return Vector2.down;
+        if (angle >= 292.5f && angle < 337.5f) return new Vector2(1, -1).normalized;
+
+        return Vector2.right; // デフォルト
+    }
+
 
     void AttackInput()
     {
@@ -55,12 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             if (mainTriggers.Length > 0 && currentTrion >= mainTriggers[currentMainIndex].trionCost)
             {
-                // マウスの位置をワールド座標で取得
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mousePos.z = 0f; // Z座標を0に揃える（2Dゲームで重要）
-
-                // プレイヤーの位置からマウス方向へのベクトルを計算
-                Vector3 direction = (mousePos - transform.position).normalized;
+                Vector3 direction = lookDirection; // キャラの向きに沿って発射
 
                 // 発射処理
                 mainTriggers[currentMainIndex].Use(transform.position, direction);
