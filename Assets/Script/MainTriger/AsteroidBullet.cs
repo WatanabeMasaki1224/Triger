@@ -27,6 +27,8 @@ public class AsteroidBullet : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            Debug.Log("Hit Boss");
+
             other.GetComponent<Enemy>()?.TakeDamage(damage);
             Destroy(gameObject);
         }
