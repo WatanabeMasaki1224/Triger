@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Vector2 lookDirection = Vector2.right; //初期は右向き
-
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -90,15 +90,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*if (Input.GetMouseButtonDown(1))
-        {
-            if(subTriggers.Length > 0 && currentTrion >= subTriggers[currentSubIndex].trionCost)
-            {
-                subTriggers[currentSubIndex].Use(transform.position);
-                currentTrion -= subTriggers[currentSubIndex].trionCost;
-            }
-        }*/
+       
     }
+
+   
 
     void TriggerSwitch()
     {
@@ -109,8 +104,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            
             currentSubIndex = (currentSubIndex + 1) % subTriggers.Length;
-            // サブトリガーUI更新処理
+            Debug.Log("SubTrigger switched to: " + subTriggers[currentSubIndex].name);
         }
     }
 
@@ -133,6 +129,15 @@ public class PlayerController : MonoBehaviour
     public int GetCurrentTrion()
     {
         return currentTrion;
+    }
+
+    public void CureTrion(int amount)
+    {
+        currentTrion += amount;
+        if (currentTrion > maxTrion)
+        {
+           currentTrion = maxTrion;
+        }
     }
 
 }

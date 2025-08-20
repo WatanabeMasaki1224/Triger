@@ -7,29 +7,44 @@ public class SubTrigger
 {
     public string name;
     public TriggerType type;
-    public GameObject seardPrefab;
-    public GameObject supaiderPrefab;
+    public GameObject baseShieldPrefab;
+    public GameObject playerShieldPrefab;
     public int trionCost;
-    public int damage;
+    public float coolTime = 1f;
+    private GameObject activeShield; // åªç›ê∂ê¨Ç≥ÇÍÇƒÇ¢ÇÈÉVÅ[ÉãÉh
 
-    public void Use(Vector3 firePoint, Vector3 direction)
+
+
+    public void UseContinuous(Vector3 firePoint)
     {
-        switch (type)
+        if (activeShield == null)
         {
-            case TriggerType.Seard:
-                {
+            switch (type)
+            {
+                case TriggerType.BaseShield:
+                    activeShield = GameObject.Instantiate(baseShieldPrefab, firePoint, Quaternion.identity);
+                    activeShield.transform.SetParent(GameObject.FindWithTag("Base").transform);
                     break;
-                }
-            case TriggerType.Spider:
-                {
+                case TriggerType.PlayerShield:
+                    activeShield = GameObject.Instantiate(playerShieldPrefab, firePoint, Quaternion.identity);
+                    activeShield.transform.SetParent(GameObject.FindWithTag("Player").transform);
                     break;
-                }
+            }
+        }
+    }
+
+    public void Stop()
+    {
+        if (activeShield != null)
+        {
+            GameObject.Destroy(activeShield);
+            activeShield = null;
         }
     }
 
     public enum TriggerType
     {
-       Seard,
-       Spider,
+       BaseShield,
+       PlayerShield,
     }
 }
