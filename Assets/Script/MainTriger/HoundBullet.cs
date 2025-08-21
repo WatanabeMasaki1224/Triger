@@ -9,6 +9,12 @@ public class HoundBullet : MonoBehaviour
     private Transform target;
     public float range = 5f;
     public float lifeTime = 3f;
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void Setup(Vector3 dir,float spd,int dmg)
     {
@@ -46,15 +52,25 @@ public class HoundBullet : MonoBehaviour
 
     void Update()
     {
+        Vector3 dir;
+
         if (target != null)
         {
-            Vector3 dir = (target.position - transform.position).normalized;
-            transform.position += dir * speed * Time.deltaTime;
+            dir = (target.position - transform.position).normalized;
         }
-
         else
         {
-            transform.position = transform.up * speed * Time.deltaTime;
+            dir = transform.up; // ’Ç”öæ‚ª‚¢‚È‚¢ê‡‚Íã•ûŒü
+        }
+
+        // ˆÊ’uXV
+        transform.position += dir * speed * Time.deltaTime;
+
+        // ’e‚ÌŒü‚«‚ğˆÚ“®•ûŒü‚É‡‚í‚¹‚é
+        if (dir != Vector3.zero)
+        {
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
 
