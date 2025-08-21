@@ -10,6 +10,12 @@ public class PlayerController : MonoBehaviour
     [Header("トリオン設定")]
     public int maxTrion = 100;
     private int currentTrion;
+    [Header("スプライト設定")]
+    public Sprite spriteUp;
+    public Sprite spriteDown;
+    public Sprite spriteLeft;
+    public Sprite spriteRight;
+    private SpriteRenderer spriteRenderer;
     [Header("トリガー設定")]
     public MainTrigger[] mainTriggers;
     private int currentMainIndex = 0;
@@ -22,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = rb.GetComponent<SpriteRenderer>();
         currentTrion = maxTrion;
     }
 
@@ -30,6 +37,7 @@ public class PlayerController : MonoBehaviour
         MovementInput();
         AttackInput();
         TriggerSwitch();
+        SpriteDirection();
 
         // 武器ごとのタイマー更新
         foreach (var trigger in mainTriggers)
@@ -53,6 +61,32 @@ public class PlayerController : MonoBehaviour
         if (moveInput != Vector2.zero)
         {
             lookDirection = GetEightDirection(moveInput);
+        }
+    }
+
+    void SpriteDirection()
+    {
+        if(Mathf.Abs(lookDirection.x) > Mathf.Abs(lookDirection.y))
+        {
+            if(lookDirection.x > 0)
+            {
+                spriteRenderer.sprite = spriteRight;
+            }
+            else
+            {
+                spriteRenderer.sprite = spriteLeft;
+            }
+        }
+        else
+        {
+            if(lookDirection.y > 0)
+            {
+                spriteRenderer.sprite = spriteUp;
+            }
+            else
+            {
+                spriteRenderer.sprite = spriteDown;
+            }
         }
     }
 
@@ -103,10 +137,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.E))
-        {
-            
+        {   
             currentSubIndex = (currentSubIndex + 1) % subTriggers.Length;
-            Debug.Log("SubTrigger switched to: " + subTriggers[currentSubIndex].name);
         }
     }
 
