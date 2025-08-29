@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UIElements;
 
 public class Boss : MonoBehaviour
 {
@@ -71,7 +72,8 @@ public class Boss : MonoBehaviour
         }
 
         Vector3 dir = (player.position - transform.position).normalized;
-        GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.identity);
+        float angle  = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+        GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.Euler(0,0,angle+90f));
         BossSlash slashScript = slash.GetComponent<BossSlash>();
         if (slashScript != null)
         {
@@ -85,10 +87,10 @@ public class Boss : MonoBehaviour
         {
             // プレイヤーの方向を計算
             Vector3 dir = (player.position - firePoint.position).normalized;
-
+            // 角度計算
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             // 弾を生成
-            GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-
+            GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(0,0,angle));
             // EnemyBullet スクリプトを取得して方向を設定
             BossBullet bullet = bulletObj.GetComponent<BossBullet>();
             if (bullet != null)

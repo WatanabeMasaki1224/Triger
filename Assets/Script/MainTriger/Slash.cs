@@ -14,7 +14,7 @@ public class Slash : MonoBehaviour
         transform.position += direction.normalized * range * 0.5f;
         // Œü‚«‚ð‘µ‚¦‚é
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
 
         Destroy(gameObject,lifeTime);
 

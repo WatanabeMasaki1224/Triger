@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 3
-  score: 1
+  score: 10
 --- !u!212 &8351785301768590094
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTarget: {fileID: 6921160608695798414, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
-  moveSpeed: 2
+  moveSpeed: 3
   stopDistance: 5
   bulletPrefab: {fileID: 8380714547983099827, guid: f13583a21362b434285025d44d0b542b, type: 3}
   bulletSpeed: 5
