@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BumsterP : MonoBehaviour
 {
@@ -52,8 +53,8 @@ public class BumsterP : MonoBehaviour
     {
         Vector3 direction = (playerTarget.position - transform.position).normalized;
         Vector3 spawnPos = transform.position + direction * 1f;//敵を大きく白田個々の値も増やす// 少し前にずらす
-
-        GameObject bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+        float  angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        GameObject bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.Euler(0,0,angle));
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
         if (rb != null)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;  //シングルトン
+    public static GameManager Instance { get; private set; } //シングルトン
 
     private int score = 0;
 
@@ -13,14 +13,13 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         else
         {
             Destroy(gameObject);
         }
-
-        DontDestroyOnLoad(gameObject);
 
     }
 

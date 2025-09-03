@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             trigger.UpdateTimer(Time.deltaTime);
         }
+
     }
 
     void FixedUpdate()
@@ -155,8 +157,13 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
-        //ゲーム終了画面に移行
+        // スコアをランキングに保存
+        ScoreManager.Instance.AddScore(GameManager.Instance.GetScore());
+
+        // リザルト画面へ
+        SceneManager.LoadScene("claer");
     }
+
 
     public int GetCurrentTrion()
     {
