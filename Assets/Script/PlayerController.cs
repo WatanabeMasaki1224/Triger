@@ -157,10 +157,9 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
-        // スコアをランキングに保存
-        ScoreManager.Instance.AddScore(GameManager.Instance.GetScore());
-
         // リザルト画面へ
+        int finalScore = GameManager.Instance.GetScore(); //現在のスコア所得
+        ScoreManager.Instance.AddScore(finalScore);　//ランキングに追加
         SceneManager.LoadScene("claer");
     }
 
