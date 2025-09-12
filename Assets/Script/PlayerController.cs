@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Vector2 lookDirection = Vector2.right; //初期は右向き
-    
+    private bool isAttacking = false; //攻撃中かの判定
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,6 +36,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (currentTrion <= 0)
+        {
+            Die();
+        }
+
         MovementInput();
         AttackInput();
         TriggerSwitch();
@@ -48,10 +54,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void FixedUpdate()
-    {
-        rb.velocity = moveInput * moveSpeed;
-    }
 
     void MovementInput()
     {
@@ -116,17 +118,26 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (mainTriggers.Length > 0 && currentTrion >= mainTriggers[currentMainIndex].trionCost)
-            {
-                Vector3 direction = lookDirection; // キャラの向きに沿って発射
+            var currentTrigger = mainTriggers[currentMainIndex];
 
-                // 発射処理
-                mainTriggers[currentMainIndex].Use(transform.position, direction);
-                currentTrion -= mainTriggers[currentMainIndex].trionCost;
+            // トリオンとクールタイムの両方をチェック
+            if (currentTrion >= currentTrigger.trionCost && currentTrigger.CanUse())
+            {
+                isAttacking = true; // 攻撃中フラグON
+                Vector3 direction = lookDirection;
+
+                currentTrigger.Use(transform.position, direction);
+                currentTrion -= currentTrigger.trionCost;
+
+                // 攻撃中フラグを戻す時間を設定
+                float attackDuration = 0.5f; // 弾も剣も共通で短時間停止
+                StartCoroutine(ResetAttackFlag(attackDuration));
+            }
+            else
+            {
+                Debug.Log("攻撃はまだ使用できません（クールタイム中またはトリオン不足）");
             }
         }
-
-       
     }
 
    
@@ -146,17 +157,13 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (currentTrion <= 0) return; // すでに死んでいる場合は何もしない
         currentTrion -= damage;
-        Debug.Log(currentTrion);
-        if (currentTrion <= 0)
-        {
-            Die();
-        }
+        Debug.Log(currentTrion);    
     }
 
     private void Die()
     {
-        Destroy(gameObject);
         // リザルト画面へ
         int finalScore = GameManager.Instance.GetScore(); //現在のスコア所得
         ScoreManager.Instance.AddScore(finalScore);　//ランキングに追加
@@ -178,4 +185,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator ResetAttackFlag(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isAttacking = false;
+    }
+
+    void FixedUpdate()
+    {
+        if (!isAttacking)
+            rb.velocity = moveInput * moveSpeed;
+        else
+            rb.velocity = Vector2.zero;
+    }
 }
