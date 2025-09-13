@@ -8,29 +8,24 @@ public class PlayerController : MonoBehaviour
 {
     [Header("移動")]
     public float moveSpeed = 5f;
+    private Rigidbody2D rb;
+    private Vector2 moveInput;
+    private Vector2 lookDirection = Vector2.down; // 初期は下向き
     [Header("トリオン設定")]
     public int maxTrion = 100;
     private int currentTrion;
-    [Header("スプライト設定")]
-    public Sprite spriteUp;
-    public Sprite spriteDown;
-    public Sprite spriteLeft;
-    public Sprite spriteRight;
-    private SpriteRenderer spriteRenderer;
     [Header("トリガー設定")]
     public MainTrigger[] mainTriggers;
     private int currentMainIndex = 0;
     public SubTrigger[] subTriggers;
     private int currentSubIndex = 0;
-    private Rigidbody2D rb;
-    private Vector2 moveInput;
-    private Vector2 lookDirection = Vector2.right; //初期は右向き
     private bool isAttacking = false; //攻撃中かの判定
+    private Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = rb.GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         currentTrion = maxTrion;
     }
 
@@ -44,7 +39,6 @@ public class PlayerController : MonoBehaviour
         MovementInput();
         AttackInput();
         TriggerSwitch();
-        SpriteDirection();
 
         // 武器ごとのタイマー更新
         foreach (var trigger in mainTriggers)
@@ -59,42 +53,25 @@ public class PlayerController : MonoBehaviour
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        moveInput = new Vector2(h, v).normalized;
+        moveInput = new Vector2(h, v);
 
-        // 移動入力がある場合のみ向きを更新
-        if (moveInput != Vector2.zero)
+        // 移動しているか
+        bool isMoving = moveInput != Vector2.zero;
+        animator.SetBool("isMoving", isMoving);
+        // 移動中のみ lookDirection を更新
+        if (isMoving)
         {
-            lookDirection = GetEightDirection(moveInput);
+            lookDirection = moveInput.normalized;
         }
+
+        // BlendTree に方向を渡す
+        animator.SetFloat("moveX", lookDirection.x);
+        animator.SetFloat("moveY", lookDirection.y);
+
     }
 
-    void SpriteDirection()
-    {
-        if(Mathf.Abs(lookDirection.x) > Mathf.Abs(lookDirection.y))
-        {
-            if(lookDirection.x > 0)
-            {
-                spriteRenderer.sprite = spriteRight;
-            }
-            else
-            {
-                spriteRenderer.sprite = spriteLeft;
-            }
-        }
-        else
-        {
-            if(lookDirection.y > 0)
-            {
-                spriteRenderer.sprite = spriteUp;
-            }
-            else
-            {
-                spriteRenderer.sprite = spriteDown;
-            }
-        }
-    }
-
-    Vector2 GetEightDirection(Vector2 dir)
+   
+     Vector2 GetEightDirection(Vector2 dir)
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         // 0~360に変換
