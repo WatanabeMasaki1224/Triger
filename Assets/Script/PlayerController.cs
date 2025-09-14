@@ -156,10 +156,10 @@ public class PlayerController : MonoBehaviour
     public void CureTrion(int amount)
     {
         currentTrion += amount;
-        if (currentTrion > maxTrion)
+        /*if (currentTrion > maxTrion)
         {
            currentTrion = maxTrion;
-        }
+        }*/
     }
 
     IEnumerator ResetAttackFlag(float duration)
