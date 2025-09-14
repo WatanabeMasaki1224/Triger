@@ -2,21 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseController : MonoBehaviour
 {
     public int maxHP = 100;
     private int currentHP;
+    [Header("HPバー")]
+    public Image hpFillImage; // 緑のゲージImage
+    public Text hpText;       // HP数値表示用Text
 
     void Start()
     {
         currentHP = maxHP;
+        UpdateHPUI();
+        if (hpFillImage != null)
+        {
+            hpFillImage.color = Color.green; // 緑にする
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
         Debug.Log(currentHP);
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        UpdateHPUI(); 
         if (currentHP <= 0)
         {
             Destroyed();
@@ -46,4 +57,14 @@ public class BaseController : MonoBehaviour
         return maxHP;
     }
 
+    private void UpdateHPUI()
+    {
+        if (hpFillImage != null)
+        {
+            hpFillImage.fillAmount = (float)currentHP / maxHP;
+        }
+        if (hpText != null)
+            hpText.text = currentHP + " / " + maxHP;  // HP数値を表示
+
+    }
 }
