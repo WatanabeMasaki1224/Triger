@@ -14,13 +14,15 @@ public class UIManager : MonoBehaviour
     {
         if(GameManager.Instance != null)
         {
-            scoreText.text = "スコア" + GameManager.Instance.GetScore();
+            // 5桁表示。0埋めで表示
+            int score = GameManager.Instance.GetScore();
+            scoreText.text = "スコア:" + score.ToString("D5");
         }
 
-        if(player != null)
+        /*if(player != null)
         {
             trionText.text = "トリオン" + player.GetCurrentTrion();
 
-        }
+        }*/
     }
 }

@@ -64,7 +64,7 @@ public class BaseController : MonoBehaviour
             hpFillImage.fillAmount = (float)currentHP / maxHP;
         }
         if (hpText != null)
-            hpText.text = currentHP + " / " + maxHP;  // HP数値を表示
+            hpText.text = "拠点:"　+　currentHP ;  // HP数値を表示
 
     }
 }
