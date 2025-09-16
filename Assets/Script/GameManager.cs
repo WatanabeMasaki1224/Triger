@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; } //ƒVƒ“ƒOƒ‹ƒgƒ“
-
     private int score = 0;
 
     void Awake()
@@ -30,15 +29,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void ReduceScore(int amount)
-    {
-        score -= amount;
-        Debug.Log("Score;" + score);
+    { 
+        score -= amount; Debug.Log("Score;" + score);
     }
 
     public int GetScore()
     {
         return score;
     }
-
-   
 }

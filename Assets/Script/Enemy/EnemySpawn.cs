@@ -23,18 +23,14 @@ public class EnemySpawn : MonoBehaviour
 
     void Update()
     {
-        int totalEnemies = 0;
-        foreach (var enemyType in enemyTypes)
-        {
-            totalEnemies += GameObject.FindGameObjectsWithTag(enemyType.enemyPrefab.tag).Length;
-        }
-
+        // 全敵の合計を一度だけ数える（Enemyタグのオブジェクト数）
+        int totalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         // 全体最大数に達していればスポーンさせない
         if (totalEnemies >= maxTotalEnemies) return;
 
         foreach (var enemyType in enemyTypes)
         {
-            int currentCount = GameObject.FindGameObjectsWithTag(enemyType.enemyPrefab.tag).Length;
+            int currentCount = CountEnemyOfType(enemyType.enemyPrefab);
             if (currentCount < enemyType.enemyCount)
             {
                 enemyType.timer -= Time.deltaTime;
@@ -49,14 +45,24 @@ public class EnemySpawn : MonoBehaviour
         
     }
 
+    int CountEnemyOfType(GameObject prefab)
+    {
+        int count = 0;
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (enemy.name.Contains(prefab.name)) count++;
+        }
+        return count;
+    }
+
     void SpawnEnemy(EnemyData enemyType)
     {
         if (spawnPoints.Length == 0 || enemyType.enemyPrefab == null) return;
-
-        // ランダム出現位置
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        GameObject newEnemy = Instantiate(enemyType.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        Instantiate(enemyType.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        // 名前が "(Clone)" 付きになるので整形しておくと CountEnemyOfType で数えやすい
+        newEnemy.name = enemyType.enemyPrefab.name + "_Enemy";
     }
 
 }

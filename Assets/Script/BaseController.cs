@@ -38,12 +38,14 @@ public class BaseController : MonoBehaviour
     void Destroyed()
     {
         Debug.Log("拠点破壊された");
-
-        if(GameManager.Instance != null)
-        {
-            GameManager.Instance.ReduceScore(100);
+        if (GameManager.Instance != null) 
+        { 
+            GameManager.Instance.ReduceScore(100); 
         }
-
+        // リザルト画面に移動
+        int finalScore = GameManager.Instance != null ? GameManager.Instance.GetScore() : 0;
+        ScoreManager.Instance.AddScore(finalScore); // ランキングに追加
+        UnityEngine.SceneManagement.SceneManager.LoadScene("claer"); // シーン名を正しいものに
         Destroy(gameObject);
     }
 
