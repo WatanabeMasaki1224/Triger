@@ -22,24 +22,16 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-       
+        if (other.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
-            {
-                var player = other.GetComponent<PlayerController>();
-                if (player != null)
-                {
-                    player.TakeDamage(damage);
-                }
-            }
-            else if (other.CompareTag("Base"))
-            {
-                var baseObj = other.GetComponent<BaseController>();
-                if (baseObj != null)
-                {
-                    baseObj.TakeDamage(damage);
-                }
-            }
+            var player = other.GetComponent<PlayerController>();
+            if (player != null) player.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("Base"))
+        {
+            var baseObj = other.GetComponent<BaseController>();
+            if (baseObj != null) baseObj.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
