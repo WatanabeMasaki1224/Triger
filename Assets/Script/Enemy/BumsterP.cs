@@ -11,7 +11,7 @@ public class BumsterP : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 5f;
     public float fireInterval = 2f;
-
+    public Transform firePoint;
     private float fireTimer;
 
     void Start()
@@ -25,7 +25,7 @@ public class BumsterP : MonoBehaviour
     void Update()
     {
         if (playerTarget == null) return;
-
+        Flip();
         float distance = Vector2.Distance(transform.position, playerTarget.position);
 
         if (distance > stopDistance)
@@ -51,15 +51,28 @@ public class BumsterP : MonoBehaviour
 
     void Shoot()
     {
+        if (firePoint == null) return;
         Vector3 direction = (playerTarget.position - transform.position).normalized;
-        Vector3 spawnPos = transform.position + direction * 1f;//敵を大きく白田個々の値も増やす// 少し前にずらす
         float  angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        GameObject bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.Euler(0,0,angle));
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(0,0,angle));
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
         if (rb != null)
         {
             rb.velocity = direction * bulletSpeed;
         }
+    }
+
+    void Flip()
+    {
+        if (playerTarget == null) return;
+        Vector3 scale = transform.localScale;
+        if(playerTarget.position.x > transform.position.x)
+            scale.x = -Mathf.Abs(scale.x);
+        else
+            scale.x = Mathf.Abs(scale.x);
+
+        transform.localScale = scale;   
+
     }
 }

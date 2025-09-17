@@ -26,15 +26,19 @@ public class Boss : MonoBehaviour
     private float meleeTimer = 0f;
     private float rangedTimer = 0f;
 
-    
+    [Header("画像設定")]
+    public Sprite idleSprite;   // 待機
+    public Sprite attackSprite; // 攻撃
+    private SpriteRenderer spriteRenderer;
+
     void Start()
     {
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
-
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = idleSprite;
     }
 
     private void Update()
@@ -44,6 +48,7 @@ public class Boss : MonoBehaviour
             return;
         }
 
+        Flip();
         // タイマー更新
         meleeTimer -= Time.deltaTime;
         rangedTimer -= Time.deltaTime;
@@ -70,7 +75,8 @@ public class Boss : MonoBehaviour
         {
             return ;
         }
-
+        
+        spriteRenderer.sprite = attackSprite;
         Vector3 dir = (player.position - transform.position).normalized;
         float angle  = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
         GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.Euler(0,0,angle+90f));
@@ -79,12 +85,16 @@ public class Boss : MonoBehaviour
         {
             slashScript.Setup(dir, meleeDamage); // ← Setup 関数を作る
         }
+        // 攻撃後に元の画像に戻す（
+        StartCoroutine(ResetSprite(0.2f));
     }
 
     void AttackRanged()
     {
         if (bulletPrefab != null && firePoint != null && player != null)
         {
+            // 画像切替
+            spriteRenderer.sprite = attackSprite;
             // プレイヤーの方向を計算
             Vector3 dir = (player.position - firePoint.position).normalized;
             // 角度計算
@@ -97,11 +107,19 @@ public class Boss : MonoBehaviour
             {
                 bullet.Setup(dir);
             }
+            // 攻撃後に元の画像に戻す
+            StartCoroutine(ResetSprite(0.4f));
         }
 
     }
 
-   
+    IEnumerator ResetSprite(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        spriteRenderer.sprite = idleSprite;
+    }
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -110,5 +128,17 @@ public class Boss : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, rangedRange);
     }
 
+    void Flip()
+    {
+        if (player == null) return;
 
+        Vector3 scale = transform.localScale;
+
+        if (player.position.x > transform.position.x)
+            scale.x = -Mathf.Abs(scale.x);  // プレイヤーが右 → 右向き
+        else
+            scale.x = Mathf.Abs(scale.x); // プレイヤーが左 → 左向き
+
+        transform.localScale = scale;
+    }
 }

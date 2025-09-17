@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 5728261598013271850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.41, y: -0.33, z: 0}
+  m_LocalPosition: {x: -1.04, y: 0.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -215,6 +215,8 @@ MonoBehaviour:
   bulletSpeed: 5
   meleeCoolTime: 1.5
   rangedCoolTime: 2
+  idleSprite: {fileID: -954214844, guid: 79c469db7b896f940bab7dd2601dc24f, type: 3}
+  attackSprite: {fileID: 21300000, guid: 05624650b746bb347be15f276e670065, type: 3}
 --- !u!114 &4528867202160559154
 MonoBehaviour:
   m_ObjectHideFlags: 0

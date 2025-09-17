@@ -493,7 +493,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 80fb86e5116f66548a4ead436e646bf9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.365
+  m_Volume: 0.14
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -607,11 +607,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 403998869069955624, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.32
+      value: -18.86
       objectReference: {fileID: 0}
     - target: {fileID: 403998869069955624, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 403998869069955624, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: m_LocalPosition.z
@@ -652,6 +652,10 @@ PrefabInstance:
     - target: {fileID: 4528867202160559154, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: score
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6936048021632888783, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7684906239160481986, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: m_Name
@@ -1690,7 +1694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8309361182598603282, guid: 7db6a79eeb9643e49a1185b14ad60817, type: 3}
       propertyPath: maxHP
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8309361182598603282, guid: 7db6a79eeb9643e49a1185b14ad60817, type: 3}
       propertyPath: hpText
@@ -2794,7 +2798,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: ae02dc9e2317c7a45a4cb973ba6d04b2, type: 3}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: maxTrion
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: spriteUp

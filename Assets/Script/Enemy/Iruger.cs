@@ -7,7 +7,7 @@ public class Iruger : MonoBehaviour
     public float speed = 2f;
     private Transform target;
     public int damage = 1;
-
+    public GameObject explosionPrefab; // 爆発アニメーションPrefab
     void Update()
     {
         if (target == null)
@@ -24,7 +24,7 @@ public class Iruger : MonoBehaviour
             }
         }
 
-
+        Flip();
         Vector3 dir = (target.position - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
     }
@@ -38,9 +38,41 @@ public class Iruger : MonoBehaviour
             {
                 baseCtrl.TakeDamage(damage);
             }
-
-            // 自爆（スコアは入れない）
-            Destroy(gameObject);
+            Explode();
+            return;
         }
+        else if (other.CompareTag("Player"))
+        {
+            PlayerController playerCtrl = other.GetComponent<PlayerController>();
+            if (playerCtrl != null)
+            {
+                playerCtrl.TakeDamage(damage); // PlayerController に TakeDamage があれば呼ぶ
+            }
+            Explode();
+            return;
+        }
+    }
+
+    private void Explode()
+    {
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
+    }
+
+    void Flip()
+    {
+        if (target == null) return;
+
+        Vector3 scale = transform.localScale;
+
+        if (target.position.x > transform.position.x)
+            scale.x = -Mathf.Abs(scale.x);  // 右向き
+        else
+            scale.x = Mathf.Abs(scale.x); // 左向き
+
+        transform.localScale = scale;
     }
 }
