@@ -8,10 +8,15 @@ public class Title : MonoBehaviour
 {
     public Image fadeImage;          // Canvasに置いた黒（または色付き）Image
     public float fadeDuration = 1f;  // フェードにかける時間
+    public AudioSource audioSource;
+    public AudioClip clip;
 
-    // スタートボタン押下時
     public void OnClickStart()
     {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
         StartCoroutine(FadeAndLoadScene());
     }
 

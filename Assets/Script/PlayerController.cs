@@ -21,12 +21,31 @@ public class PlayerController : MonoBehaviour
     private int currentSubIndex = 0;
     private bool isAttacking = false; //UŒ‚’†‚©‚Ì”»’è
     private Animator animator;
+    [Header("Œø‰Ê‰¹ƒNƒŠƒbƒv")]
+    public AudioClip slashSound;   // Œ•UŒ‚—p
+    public AudioClip bulletSound;  // ’eUŒ‚—p
+    public AudioClip hitSound;     // ”í’e
+    public AudioClip cureSound;    // ‰ñ•œ
+
+    [Header("Œø‰Ê‰¹ƒ\[ƒX")]
+    public AudioSource slashSource;
+    public AudioSource bulletSource;
+    public AudioSource hitSource;
+    public AudioSource cureSource;
+
+    private SpriteRenderer sr;
+    public float hitFlash = 0.2f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentTrion = maxTrion;
+        sr = GetComponent<SpriteRenderer>();
+        if (slashSource == null) slashSource = gameObject.AddComponent<AudioSource>();
+        if (bulletSource == null) bulletSource = gameObject.AddComponent<AudioSource>();
+        if (hitSource == null) hitSource = gameObject.AddComponent<AudioSource>();
+        if (cureSource == null) cureSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -105,6 +124,15 @@ public class PlayerController : MonoBehaviour
 
                 currentTrigger.Use(transform.position, direction);
                 currentTrion -= currentTrigger.trionCost;
+                //Œø‰Ê‰¹‚Ì•ªŠò
+                if (currentTrigger.type == TriggerType.Slash)
+                {
+                    if (slashSound != null) slashSource.PlayOneShot(slashSound);
+                }
+                else // ’eUŒ‚
+                {
+                    if (bulletSound != null) bulletSource.PlayOneShot(bulletSound);
+                }
 
                 // UŒ‚’†ƒtƒ‰ƒO‚ğ–ß‚·ŠÔ‚ğİ’è
                 float attackDuration = 0.5f; // ’e‚àŒ•‚à‹¤’Ê‚Å’ZŠÔ’â~
@@ -116,8 +144,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-   
 
     void TriggerSwitch()
     {
@@ -136,7 +162,17 @@ public class PlayerController : MonoBehaviour
     {
         if (currentTrion <= 0) return; // ‚·‚Å‚É€‚ñ‚Å‚¢‚éê‡‚Í‰½‚à‚µ‚È‚¢
         currentTrion -= damage;
-        Debug.Log(currentTrion);    
+        Debug.Log(currentTrion);   
+        
+        if(hitSound != null)
+        {
+            hitSource.PlayOneShot(hitSound);
+        }
+
+        if(sr != null)
+        {
+            StartCoroutine(FlashRed());
+        }
     }
 
     private void Die()
@@ -147,6 +183,12 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("claer");
     }
 
+    private IEnumerator FlashRed()
+    {
+        sr.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        sr.color = Color.white;
+    }
 
     public int GetCurrentTrion()
     {
@@ -160,6 +202,11 @@ public class PlayerController : MonoBehaviour
         {
            currentTrion = maxTrion;
         }*/
+
+        if (cureSound != null)
+        {
+            cureSource.PlayOneShot(cureSound);
+        }
     }
 
     IEnumerator ResetAttackFlag(float duration)

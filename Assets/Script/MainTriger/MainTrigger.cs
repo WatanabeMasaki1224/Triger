@@ -12,7 +12,7 @@ public class MainTrigger
     public float speed;
     public int trionCost;
     public int damage;
-    public float coolTime = 1f;  
+    public float coolTime = 1f;
 
     [HideInInspector] public float timer = 0f; // 現在のクールタイム
 
