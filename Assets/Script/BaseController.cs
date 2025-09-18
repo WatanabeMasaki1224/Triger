@@ -40,7 +40,7 @@ public class BaseController : MonoBehaviour
         Debug.Log("‹’“_”j‰ó‚³‚ê‚½");
         if (GameManager.Instance != null) 
         { 
-            GameManager.Instance.ReduceScore(100); 
+            GameManager.Instance.ReduceScore(1000); 
         }
         // ƒŠƒUƒ‹ƒg‰æ–Ê‚ÉˆÚ“®
         int finalScore = GameManager.Instance != null ? GameManager.Instance.GetScore() : 0;

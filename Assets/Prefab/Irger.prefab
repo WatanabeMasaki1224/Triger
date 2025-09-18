@@ -175,7 +175,6 @@ MonoBehaviour:
   speed: 0.5
   damage: 10
   explosionPrefab: {fileID: 5168844704585445579, guid: 7f8ebe12e7730f643a8701a2a85fa1cd, type: 3}
-  explosionSE: {fileID: 8300000, guid: f0e09934450615b42b88e9e9be023b3f, type: 3}
 --- !u!114 &7877770703544779189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,5 +187,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28994c93088ca549ae405083af3f59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 1
-  score: 10
+  maxHP: 6
+  score: 100

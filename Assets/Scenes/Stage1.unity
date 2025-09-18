@@ -645,9 +645,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1521413669562084842, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
+      propertyPath: rangedDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1542625528468099961, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528867202160559154, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
+      propertyPath: maxHP
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4528867202160559154, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: score
@@ -1694,7 +1702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8309361182598603282, guid: 7db6a79eeb9643e49a1185b14ad60817, type: 3}
       propertyPath: maxHP
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8309361182598603282, guid: 7db6a79eeb9643e49a1185b14ad60817, type: 3}
       propertyPath: hpText
@@ -2424,6 +2432,18 @@ PrefabInstance:
       propertyPath: spawnPoints.Array.data[7]
       value: 
       objectReference: {fileID: 1877837232}
+    - target: {fileID: 3536076633991170618, guid: 8b63d1c8f7b5b5d43b087665213f1b00, type: 3}
+      propertyPath: enemyTypes.Array.data[0].enemyCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536076633991170618, guid: 8b63d1c8f7b5b5d43b087665213f1b00, type: 3}
+      propertyPath: enemyTypes.Array.data[1].enemyCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536076633991170618, guid: 8b63d1c8f7b5b5d43b087665213f1b00, type: 3}
+      propertyPath: enemyTypes.Array.data[2].enemyCount
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5288437226893405330, guid: 8b63d1c8f7b5b5d43b087665213f1b00, type: 3}
       propertyPath: m_Name
       value: SpawnMnager
@@ -2798,7 +2818,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: ae02dc9e2317c7a45a4cb973ba6d04b2, type: 3}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: maxTrion
-      value: 50
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: spriteUp
@@ -2835,6 +2855,22 @@ PrefabInstance:
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: mainTriggers.Array.data[1].speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
+      propertyPath: mainTriggers.Array.data[0].damage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
+      propertyPath: mainTriggers.Array.data[1].damage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
+      propertyPath: mainTriggers.Array.data[3].damage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
+      propertyPath: mainTriggers.Array.data[0].trionCost
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: mainTriggers.Array.data[0].attackSound
