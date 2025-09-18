@@ -16,19 +16,19 @@ public class ResultUI : MonoBehaviour
     public GameObject gameClearEffect;     // パーティクルなど
     public AudioSource audioSource;        // ファンファーレや計算SE用
     public AudioClip fanfareClip;
-    public AudioClip calculationClip;
-    public AudioClip calculationDoneClip;
-
+   
     public GameObject nextButton;          // GAME CLEAR後に表示
-    public TMP_Text scoreCalculationText;  // 「スコア計算中…」
+    public float scoreCountUpSpeed = 500f; // 1秒あたりのスコア増加量
+
 
     void Start()
     {
         // 最初は演出用UIを非表示
         mainMessageText.gameObject.SetActive(false);
         nextButton.SetActive(false);
-        scoreCalculationText.gameObject.SetActive(false);
         titleButton.SetActive(false);
+        if (myScoreText != null) myScoreText.gameObject.SetActive(false);
+        if (scorePanel != null) scorePanel.SetActive(false);
         foreach (var t in scoreTexts)
             t.gameObject.SetActive(false);
 
@@ -62,55 +62,36 @@ public class ResultUI : MonoBehaviour
 
     IEnumerator ScoreCalculationSequence()
     {
-        // 2. スコア計算演出
-        scoreCalculationText.text = "スコア計算中…";
-        scoreCalculationText.gameObject.SetActive(true);
+        // スコアパネル表示
+        if (scorePanel != null) scorePanel.SetActive(true);
+        if (myScoreText != null) myScoreText.gameObject.SetActive(true);
 
-        float calcTime = 2.5f; // 計算時間
-        float timer = 0f;
+        int finalScore = GameManager.Instance.GetScore();
+        int displayedScore = 0;
 
-        while (timer < calcTime)
+        // 0からカウントアップ
+        while (displayedScore < finalScore)
         {
-            timer += Time.deltaTime;
-            // ランダムで電子音
-            if (Random.value < 0.1f && audioSource != null && calculationClip != null)
-            {
-                audioSource.PlayOneShot(calculationClip);
-            }
+            displayedScore += Mathf.CeilToInt(scoreCountUpSpeed * Time.deltaTime);
+            if (displayedScore > finalScore) displayedScore = finalScore;
+            myScoreText.text = $"Your Score: {displayedScore}";
             yield return null;
         }
 
-        // 計算終了音
-        if (audioSource != null && calculationDoneClip != null)
-            audioSource.PlayOneShot(calculationDoneClip);
-
-        scoreCalculationText.text = "計算終了！";
-        yield return new WaitForSeconds(0.5f);
-        scoreCalculationText.gameObject.SetActive(false);
-
-        // 3. リザルト表示
-        DisplayScore();
+        // カウントアップ完了後、ランキング表示
+        DisplayRanking();
     }
-    void DisplayScore()
+    void DisplayRanking()
     {
-        // 枠パネルを表示
-        if (scorePanel != null) scorePanel.SetActive(true);
-
-        // 自分のスコアも表示
-        if (myScoreText != null) myScoreText.gameObject.SetActive(true);
         // スコア一覧を取得
         List<int> scores = ScoreManager.Instance.GetScores();
 
         int myScore = GameManager.Instance.GetScore();
         bool myScoreDisplayed = false; // 自分のスコアが表示されたか
-        // ランキング用テキストをすべて有効化
-        for (int i = 0; i < scoreTexts.Count; i++)
-        {
-            scoreTexts[i].gameObject.SetActive(true);
-        }
         // ランキング表示
         for (int i = 0; i < scoreTexts.Count; i++)
         {
+            scoreTexts[i].gameObject.SetActive(true);
             if (i < scores.Count)
             {
                 scoreTexts[i].text = $"No.{i + 1}:{scores[i]}";
@@ -142,9 +123,6 @@ public class ResultUI : MonoBehaviour
                 scoreTexts[i].color = Color.white;
             }
         }
-
-        // 自分のスコアを別表示（必要なら）
-        myScoreText.text = $"Your Score: {myScore}";
         titleButton.SetActive(true);
     }
 
