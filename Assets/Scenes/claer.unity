@@ -772,7 +772,7 @@ MonoBehaviour:
   audioSource: {fileID: 1704268161}
   fanfareClip: {fileID: 8300000, guid: 5b4010fc585b9e1418f9b74fe97d442f, type: 3}
   countUpClip: {fileID: 8300000, guid: 6ad05437e4ba9754f9005bd3e669e4e2, type: 3}
-  finishClip: {fileID: 8300000, guid: 4dfaa4db83dc6bf4093edfa80e1dcdc2, type: 3}
+  finishClip: {fileID: 8300000, guid: a1c4b7768913e084396881c933864e94, type: 3}
   nextButton: {fileID: 171804435}
   scoreCountUpSpeed: 100
   soundInterval: 0.05
@@ -2581,7 +2581,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5b4010fc585b9e1418f9b74fe97d442f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.186
+  m_Volume: 0.188
   m_Pitch: 1
   Loop: 0
   Mute: 0

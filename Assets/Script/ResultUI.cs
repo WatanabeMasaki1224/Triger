@@ -109,16 +109,16 @@ public class ResultUI : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
 
-            // スコアを補間して計算（0 → finalScore）
+            // スコアを補間して計算
             displayedScore = Mathf.RoundToInt(Mathf.Lerp(0, finalScore, t));
             myScoreText.text = $"Your Score: {displayedScore}";
 
-            // 🔊 ピッ音（一定間隔で再生）
+            //ピッ音（一定間隔で再生）
             soundTimer += Time.deltaTime;
             if (soundTimer >= soundInterval && audioSource != null && countUpClip != null)
             {
                 soundTimer = 0f;
-                audioSource.pitch = 1f + t; // 徐々に高く
+                audioSource.pitch = 1f;
                 audioSource.PlayOneShot(countUpClip);
             }
 
@@ -127,6 +127,12 @@ public class ResultUI : MonoBehaviour
 
         // 最終値を保証
         myScoreText.text = $"Your Score: {finalScore}";
+
+        // カウントアップ完了後
+        if (audioSource != null)
+        {
+            audioSource.Stop();  // これで計算中の音を止める
+        }
 
         // カウントアップ終了音
         if (audioSource != null && finishClip != null)
