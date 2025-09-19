@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,24 +6,27 @@ using TMPro;
 
 public class ResultUI : MonoBehaviour
 {
-    [Header("ƒ‰ƒ“ƒLƒ“ƒO•\¦—p")]
-    public List<TMP_Text> scoreTexts; // ƒ‰ƒ“ƒLƒ“ƒO—p‚ÌƒeƒLƒXƒgi10ŒÂj
-    public TMP_Text myScoreText; // ©•ª‚ÌƒXƒRƒA•\¦
-    public GameObject titleButton; // ƒ^ƒCƒgƒ‹‚É–ß‚éƒ{ƒ^ƒ“
-    public GameObject scorePanel; // ˜gƒpƒlƒ‹
-    [Header("‰‰o—p")]
-    public TMP_Text mainMessageText;       // ’†‰›‚ÌƒƒbƒZ[ƒW
-    public GameObject gameClearEffect;     // ƒp[ƒeƒBƒNƒ‹‚È‚Ç
-    public AudioSource audioSource;        // ƒtƒ@ƒ“ƒtƒ@[ƒŒ‚âŒvZSE—p
+    [Header("ãƒ©ãƒ³ã‚­ãƒ³ã‚°è¡¨ç¤ºç”¨")]
+    public List<TMP_Text> scoreTexts; // ãƒ©ãƒ³ã‚­ãƒ³ã‚°ç”¨ã®ãƒ†ã‚­ã‚¹ãƒˆï¼ˆ10å€‹ï¼‰
+    public TMP_Text myScoreText; // è‡ªåˆ†ã®ã‚¹ã‚³ã‚¢è¡¨ç¤º
+    public GameObject titleButton; // ã‚¿ã‚¤ãƒˆãƒ«ã«æˆ»ã‚‹ãƒœã‚¿ãƒ³
+    public GameObject scorePanel; // æ ãƒ‘ãƒãƒ«
+    [Header("æ¼”å‡ºç”¨")]
+    public TMP_Text mainMessageText;       // ä¸­å¤®ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+    public GameObject gameClearEffect;     // ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãªã©
+    public AudioSource audioSource;        // ãƒ•ã‚¡ãƒ³ãƒ•ã‚¡ãƒ¼ãƒ¬ã‚„è¨ˆç®—SEç”¨
     public AudioClip fanfareClip;
-   
-    public GameObject nextButton;          // GAME CLEARŒã‚É•\¦
-    public float scoreCountUpSpeed = 500f; // 1•b‚ ‚½‚è‚ÌƒXƒRƒA‘‰Á—Ê
+    public AudioClip countUpClip;          // ã‚¹ã‚³ã‚¢åŠ ç®—ã®éŸ³
+    public AudioClip finishClip;           // ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—çµ‚äº†éŸ³
+
+    public GameObject nextButton;          // GAME CLEARå¾Œã«è¡¨ç¤º
+    public float scoreCountUpSpeed = 500f; // 1ç§’ã‚ãŸã‚Šã®ã‚¹ã‚³ã‚¢å¢—åŠ é‡
+    public float soundInterval = 0.05f; // åŠ¹æœéŸ³ã‚’é³´ã‚‰ã™é–“éš”
 
 
     void Start()
     {
-        // Å‰‚Í‰‰o—pUI‚ğ”ñ•\¦
+        // æœ€åˆã¯æ¼”å‡ºç”¨UIã‚’éè¡¨ç¤º
         mainMessageText.gameObject.SetActive(false);
         nextButton.SetActive(false);
         titleButton.SetActive(false);
@@ -32,25 +35,54 @@ public class ResultUI : MonoBehaviour
         foreach (var t in scoreTexts)
             t.gameObject.SetActive(false);
 
-        // ƒQ[ƒ€ƒNƒŠƒA‰‰o‚ğŠJn
+        // ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢æ¼”å‡ºã‚’é–‹å§‹
         StartCoroutine(GameClearSequence());
     }
 
     IEnumerator GameClearSequence()
     {
-        // 1. GAME CLEAR•\¦
+        // 1. GAME CLEARè¡¨ç¤º
         mainMessageText.text = "GAME CLEAR!!";
         mainMessageText.gameObject.SetActive(true);
+        // æœ€åˆã¯å°ã•ã
+        mainMessageText.transform.localScale = Vector3.zero;
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã§æ‹¡å¤§
+        float duration = 0.6f; // æ–‡å­—ãŒå¤§ãããªã‚‹æ™‚é–“
+        float elapsed = 0f;
+        Vector3 targetScale = Vector3.one; // é€šå¸¸ã‚µã‚¤ã‚ºï¼ˆ1,1,1ï¼‰
 
-        if (gameClearEffect != null) gameClearEffect.SetActive(true);
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚’ã‹ã‘ã¦ã€Œãƒãƒ¼ãƒ³ï¼ã€ã£ã½ã
+            float scale = Mathf.Sin(t * Mathf.PI * 0.5f);
+            mainMessageText.transform.localScale = Vector3.one * scale;
+
+            yield return null;
+        }
+
+        // æœ€çµ‚çš„ã«ãƒ”ãƒƒã‚¿ãƒªé€šå¸¸ã‚µã‚¤ã‚ºã«
+        mainMessageText.transform.localScale = targetScale;
+
+        if (gameClearEffect != null)
+        {
+            gameClearEffect.SetActive(true);
+
+            // ParticleSystemã‚’å–å¾—ã—ã¦å†ç”Ÿ
+            var ps = gameClearEffect.GetComponent<ParticleSystem>();
+            if (ps != null)
+                ps.Play();
+        }
         if (audioSource != null && fanfareClip != null) audioSource.PlayOneShot(fanfareClip);
 
-        // ­‚µ‘Ò‚Á‚Ä‚©‚çuŸ‚Övƒ{ƒ^ƒ“‚ğ•\¦
+        // å°‘ã—å¾…ã£ã¦ã‹ã‚‰ã€Œæ¬¡ã¸ã€ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
         yield return new WaitForSeconds(1.5f);
         nextButton.SetActive(true);
     }
 
-    // Ÿ‚Öƒ{ƒ^ƒ“‰Ÿ‰º
+    // æ¬¡ã¸ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚
     public void OnClickNextButton()
     {
         nextButton.SetActive(false);
@@ -62,69 +94,94 @@ public class ResultUI : MonoBehaviour
 
     IEnumerator ScoreCalculationSequence()
     {
-        // ƒXƒRƒAƒpƒlƒ‹•\¦
+        // ã‚¹ã‚³ã‚¢ãƒ‘ãƒãƒ«è¡¨ç¤º
         if (scorePanel != null) scorePanel.SetActive(true);
         if (myScoreText != null) myScoreText.gameObject.SetActive(true);
 
         int finalScore = GameManager.Instance.GetScore();
         int displayedScore = 0;
-
-        // 0‚©‚çƒJƒEƒ“ƒgƒAƒbƒv
-        while (displayedScore < finalScore)
+        float duration = 2.0f; 
+        float elapsed = 0f;
+        float soundTimer = 0f;
+        // 0ã‹ã‚‰ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—
+        while (elapsed < duration)
         {
-            displayedScore += Mathf.CeilToInt(scoreCountUpSpeed * Time.deltaTime);
-            if (displayedScore > finalScore) displayedScore = finalScore;
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            // ã‚¹ã‚³ã‚¢ã‚’è£œé–“ã—ã¦è¨ˆç®—ï¼ˆ0 â†’ finalScoreï¼‰
+            displayedScore = Mathf.RoundToInt(Mathf.Lerp(0, finalScore, t));
             myScoreText.text = $"Your Score: {displayedScore}";
+
+            // ğŸ”Š ãƒ”ãƒƒéŸ³ï¼ˆä¸€å®šé–“éš”ã§å†ç”Ÿï¼‰
+            soundTimer += Time.deltaTime;
+            if (soundTimer >= soundInterval && audioSource != null && countUpClip != null)
+            {
+                soundTimer = 0f;
+                audioSource.pitch = 1f + t; // å¾ã€…ã«é«˜ã
+                audioSource.PlayOneShot(countUpClip);
+            }
+
             yield return null;
         }
 
-        // ƒJƒEƒ“ƒgƒAƒbƒvŠ®—¹ŒãAƒ‰ƒ“ƒLƒ“ƒO•\¦
+        // æœ€çµ‚å€¤ã‚’ä¿è¨¼
+        myScoreText.text = $"Your Score: {finalScore}";
+
+        // ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—çµ‚äº†éŸ³
+        if (audioSource != null && finishClip != null)
+        {
+            audioSource.pitch = 1f;
+            audioSource.PlayOneShot(finishClip);
+        }
+
+        // ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—å®Œäº†å¾Œã€ãƒ©ãƒ³ã‚­ãƒ³ã‚°è¡¨ç¤º
         DisplayRanking();
     }
     void DisplayRanking()
-    {
-        // ƒXƒRƒAˆê——‚ğæ“¾
-        List<int> scores = ScoreManager.Instance.GetScores();
-
-        int myScore = GameManager.Instance.GetScore();
-        bool myScoreDisplayed = false; // ©•ª‚ÌƒXƒRƒA‚ª•\¦‚³‚ê‚½‚©
-        // ƒ‰ƒ“ƒLƒ“ƒO•\¦
-        for (int i = 0; i < scoreTexts.Count; i++)
         {
-            scoreTexts[i].gameObject.SetActive(true);
-            if (i < scores.Count)
+            // ã‚¹ã‚³ã‚¢ä¸€è¦§ã‚’å–å¾—
+            List<int> scores = ScoreManager.Instance.GetScores();
+
+            int myScore = GameManager.Instance.GetScore();
+            bool myScoreDisplayed = false; // è‡ªåˆ†ã®ã‚¹ã‚³ã‚¢ãŒè¡¨ç¤ºã•ã‚ŒãŸã‹
+                                           // ãƒ©ãƒ³ã‚­ãƒ³ã‚°è¡¨ç¤º
+            for (int i = 0; i < scoreTexts.Count; i++)
             {
-                scoreTexts[i].text = $"No.{i + 1}:{scores[i]}";
-
-                // ©•ª‚ÌƒXƒRƒA‚È‚ç“øF‚É‚·‚é
-                if (scores[i] == myScore && !myScoreDisplayed)
+                scoreTexts[i].gameObject.SetActive(true);
+                if (i < scores.Count)
                 {
-                    myScoreDisplayed = true;
+                    scoreTexts[i].text = $"No.{i + 1}:{scores[i]}";
 
-                    // “øFƒOƒ‰ƒf[ƒVƒ‡ƒ“
-                    var rainbow = new VertexGradient(
-                        Color.red,    // ¶ã
-                        Color.yellow, // ‰Eã
-                        Color.green,  // ¶‰º
-                        Color.blue    // ‰E‰º
-                    );
-                    scoreTexts[i].enableVertexGradient = true; // © ‚±‚ê‚ğ’Ç‰Á
-                    scoreTexts[i].colorGradient = rainbow;
+                    // è‡ªåˆ†ã®ã‚¹ã‚³ã‚¢ãªã‚‰è™¹è‰²ã«ã™ã‚‹
+                    if (scores[i] == myScore && !myScoreDisplayed)
+                    {
+                        myScoreDisplayed = true;
+
+                        // è™¹è‰²ã‚°ãƒ©ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
+                        var rainbow = new VertexGradient(
+                            Color.red,    // å·¦ä¸Š
+                            Color.yellow, // å³ä¸Š
+                            Color.green,  // å·¦ä¸‹
+                            Color.blue    // å³ä¸‹
+                        );
+                        scoreTexts[i].enableVertexGradient = true; // â† ã“ã‚Œã‚’è¿½åŠ 
+                        scoreTexts[i].colorGradient = rainbow;
+                    }
+                    else
+                    {
+                        // é€šå¸¸è‰²ï¼ˆç™½ï¼‰ã«æˆ»ã™
+                        scoreTexts[i].color = Color.white;
+                    }
                 }
                 else
                 {
-                    // ’ÊíFi”’j‚É–ß‚·
+                    scoreTexts[i].text = $"No.{i + 1}: ---";
                     scoreTexts[i].color = Color.white;
                 }
             }
-            else
-            {
-                scoreTexts[i].text = $"No.{i + 1}: ---";
-                scoreTexts[i].color = Color.white;
-            }
+            titleButton.SetActive(true);
         }
-        titleButton.SetActive(true);
-    }
 
     public void OnClickTitleButton()
     {

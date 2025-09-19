@@ -493,7 +493,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 80fb86e5116f66548a4ead436e646bf9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.14
+  m_Volume: 0.18
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -659,7 +659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4528867202160559154, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: score
-      value: 10000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6936048021632888783, guid: bf81e2f0088dcf946b691e87ea739fce, type: 3}
       propertyPath: m_FlipX
@@ -979,7 +979,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 33f51e93126f14544afa42f566bb7ee9, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.841
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1171,7 +1171,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8dec86c6ffbe6f84bb0a9facf6629d14, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.76
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2438,7 +2438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3536076633991170618, guid: 8b63d1c8f7b5b5d43b087665213f1b00, type: 3}
       propertyPath: enemyTypes.Array.data[1].enemyCount
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3536076633991170618, guid: 8b63d1c8f7b5b5d43b087665213f1b00, type: 3}
       propertyPath: enemyTypes.Array.data[2].enemyCount
@@ -2818,7 +2818,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: ae02dc9e2317c7a45a4cb973ba6d04b2, type: 3}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: maxTrion
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5700236855100156368, guid: e8003f4f65d718548b92323c9369fcb0, type: 3}
       propertyPath: spriteUp
